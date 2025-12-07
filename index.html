@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Friendly Moderator Helper</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #0f1117;
+      color: #fff;
+    }
+    header {
+      background: #1a1c22;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      font-weight: 800;
+    }
+    header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+      color: #ccc;
+    }
+    .invite-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #5865F2;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .invite-button:hover {
+      background: #4752c4;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+    ul li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #00ffae;
+    }
+    footer {
+      background: #1a1c22;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    a {
+      color: #00ffae;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
 
+  <header>
+    <h1>Friendly Moderator Helper</h1>
+    <p>A powerful and easy-to-use moderation bot for Discord servers.</p>
+    <a class="invite-button" href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot%20applications.commands&permissions=8">Add to Discord</a>
+  </header>
+
+  <section>
+    <h2>Features</h2>
+    <ul>
+      <li>Advanced moderation commands: warn, mute, kick, ban, unban</li>
+      <li>Voice channel mute/deafen with timers</li>
+      <li>Music system with YouTube support and search</li>
+      <li>Owner-configurable logging system</li>
+      <li>Professional /help command and status presence</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Terms of Service</h2>
+    <p>
+      By adding this bot to your server, you agree that:
+      <ul>
+        <li>The bot may read messages required for moderation features.</li>
+        <li>Moderation actions such as bans, kicks, mutes, and warnings may be logged.</li>
+        <li>You are responsible for configuring the bot according to your server rules.</li>
+        <li>The bot owner is not responsible for misuse by server administrators.</li>
+      </ul>
+    </p>
+  </section>
+
+  <section>
+    <h2>Privacy Policy</h2>
+    <p>
+      This bot does not store personal data outside Discord. It only processes information required for moderation and command execution. No data is shared with third parties. Server configuration (like log channel ID) may be stored locally for functionality.
+    </p>
+  </section>
+
+  <footer>
+    &copy; 2025 Friendly Moderator Helper. Built by WhatCPSYT. | <a href="https://github.com/WhatCPSYT/FriendlyModeratorHelper">GitHub</a>
+  </footer>
+
+</body>
+</html>
