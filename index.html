@@ -3,24 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aqua</title>
+  <title>Aqua - Discord Moderation Bot</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; font-family: 'Inter', sans-serif; background: #0f1117; color: #fff; }
-    header { background: #1a1c22; padding: 40px 20px; text-align: center; }
-    header h1 { font-size: 2.5em; margin: 0; font-weight: 800; }
+    body { margin: 0; font-family: 'Inter', sans-serif; background: #0f1117; color: #fff; line-height: 1.6; }
+    header { background: #1a1c22; padding: 60px 20px; text-align: center; border-bottom: 2px solid #5865F2; }
+    header h1 { font-size: 3.5em; margin: 0; font-weight: 800; letter-spacing: -1px; }
     header p { font-size: 1.2em; margin-top: 10px; color: #ccc; }
-    .invite-button { display: inline-block; margin-top: 20px; padding: 12px 24px; background: #5865F2; color: #fff; font-weight: 600; border-radius: 8px; text-decoration: none; transition: background 0.3s; }
-    .invite-button:hover { background: #4752c4; }
-    #bot-status { margin-top: 15px; font-size: 1.2em; font-weight: 600; }
-    section { padding: 40px 20px; max-width: 800px; margin: auto; }
-    h2 { font-size: 1.8em; margin-bottom: 20px; font-weight: 600; }
+    
+    .button-group { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    .button { display: inline-block; padding: 14px 28px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all 0.3s; cursor: pointer; }
+    .invite-button { background: #5865F2; color: #fff; }
+    .invite-button:hover { background: #4752c4; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4); }
+    .support-button { background: #23272a; color: #fff; border: 1px solid #5865F2; }
+    .support-button:hover { background: #2c2f33; border-color: #00ffae; transform: translateY(-2px); }
+
+    #bot-status { margin-top: 20px; font-size: 1.1em; font-weight: 600; background: rgba(0,0,0,0.3); display: inline-block; padding: 6px 18px; border-radius: 20px; }
+    
+    section { padding: 40px 20px; max-width: 900px; margin: auto; }
+    h2 { font-size: 2em; margin-bottom: 20px; font-weight: 700; color: #00ffae; border-bottom: 1px solid #333; padding-bottom: 10px; }
+    h3 { color: #5865F2; margin-top: 25px; }
+    
     ul { list-style: none; padding: 0; }
-    ul li { margin-bottom: 10px; padding-left: 20px; position: relative; }
-    ul li::before { content: "✔"; position: absolute; left: 0; color: #00ffae; }
-    footer { background: #1a1c22; padding: 20px; text-align: center; font-size: 0.9em; color: #aaa; }
-    a { color: #00ffae; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    ul li { margin-bottom: 10px; padding-left: 30px; position: relative; }
+    ul li::before { content: "✔"; position: absolute; left: 0; color: #00ffae; font-weight: bold; }
+    
+    .alert-box { background: rgba(255, 71, 71, 0.1); border: 1px solid #ff4747; border-left: 5px solid #ff4747; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .info-box { background: #1a1c22; padding: 25px; border-radius: 12px; border: 1px solid #333; margin: 20px 0; }
+    .support-box { background: linear-gradient(135deg, #1a1c22 0%, #23272a 100%); border: 1px solid #5865F2; text-align: center; padding: 30px; border-radius: 15px; margin-top: 20px; }
+    
+    .data-section { background: rgba(0, 255, 174, 0.05); border: 1px dashed #00ffae; padding: 25px; border-radius: 12px; margin: 20px 0; }
+    .highlight { color: #00ffae; font-weight: 600; }
+    .warning-text { color: #ff4747; font-weight: 800; text-transform: uppercase; }
+    
+    footer { background: #1a1c22; padding: 40px; text-align: center; font-size: 0.9em; color: #aaa; margin-top: 40px; border-top: 1px solid #333; }
+    a { color: #00ffae; text-decoration: none; transition: 0.2s; }
+    a:hover { text-decoration: underline; color: #00cc8b; }
   </style>
 </head>
 <body>
@@ -28,56 +46,84 @@
   <header>
     <h1>Aqua</h1>
     <p>A powerful and easy-to-use moderation bot for Discord servers.</p>
-    <a class="invite-button" href="https://discord.com/oauth2/authorize?client_id=1446441186150584383&permissions=4504991598767190&integration_type=0&scope=bot+applications.commands">Add to Server</a>
+    <div class="button-group">
+      <a class="button invite-button" href="https://discord.com/oauth2/authorize?client_id=1446441186150584383&permissions=4504991598767190&integration_type=0&scope=bot+applications.commands">Add to Server</a>
+      <a class="button support-button" href="https://discord.gg/A8pFNDcE5m">Join Support Server</a>
+    </div>
     <p id="bot-status">Status: ⏳ Checking...</p>
   </header>
 
   <section>
-    <h2>Main Features</h2>
+    <h2>Bot Features</h2>
+    
+    <h3>Advanced Moderation</h3>
     <ul>
-      <li>Advanced moderation commands: warn, mute, unmute, kick, ban, unban</li>
-      <li>Voice moderation: vcmute, vcunmute, vcdeafen, vcundeafen, vckick</li>
-      <li>Advanced music player – supports search, links, and easy control (play, pause, skip)</li>
+      <li>Commands: warn, mute, unmute, kick, ban, unban</li>
+      <li>Voice Moderation: vcmute, vcunmute, vcdeafen, vcundeafen, vckick</li>
+      <li>Full warning system with history tracking and /warnings command</li>
+      <li>Automatic unmute/undeafen after timer expires</li>
+      <li>Safe and reliable timeout-based moderation</li>
+    </ul>
+
+    <h3>Global AutoMod & Security</h3>
+    <ul>
+      <li>Keyword filters, anti-spam, and mention limits</li>
+      <li>Global link blocking and automatic message filtering</li>
+      <li>Fully automated AutoMod rule creation with /automod commands</li>
+      <li>Professional logging system (who used command, target, reason, timestamps)</li>
+    </ul>
+
+    <h3>Music & Entertainment</h3>
+    <ul>
+      <li>Advanced music player – supports search, links, and easy control</li>
+      <li>Controls: play, pause, skip, and more</li>
       <li>Auto-disconnect after inactivity with text-channel notification</li>
-      <li>Owner-configurable logging system</li>
-      <li>Professional /help command and clean presence</li>
-      <li>Global AutoMod system: keyword filters, anti-spam, mention limits, link blocking</li>
     </ul>
   </section>
 
   <section>
-    <h2>Advanced Features</h2>
-    <ul>
-      <li>Full warning system with history tracking</li>
-      <li>/warnings command showing all warns for a user</li>
-      <li>Logs include: who used the command, target user, reason, and timestamps</li>
-      <li>Automatic unmute/undeafen after timer expires</li>
-      <li>Automatic logging of all moderation and voice actions</li>
-      <li>Safe and reliable timeout-based moderation</li>
-      <li>Fully automated AutoMod rule creation with /automod commands</li>
-      <li>Global keyword filtering across the entire server</li>
-      <li>Automatic message blocking and optional timeouts</li>
-    </ul>
+    <h2>Data Management & Privacy</h2>
+    <div class="data-section">
+      <h3>Your Data, Your Rights</h3>
+      <p>Aqua stores moderation-related data (warnings, ticket setups, logs). You have the right to:</p>
+      <ul>
+        <li><strong>Request Data:</strong> Get a copy of all stored info regarding your user or server.</li>
+        <li><strong>Delete Data:</strong> Request permanent removal of all your data from our system.</li>
+      </ul>
+      <p>To exercise these rights, join our <a href="TWÓJ_LINK_DO_SERWERA" class="highlight">Support Server</a> and open a <strong>Data Request Ticket</strong>.</p>
+    </div>
+
+    <div class="info-box">
+      <p><strong>DM Policy:</strong> <span class="highlight">Aqua will never send unsolicited DMs.</span> DMs are sent ONLY for <strong>Ticket Transcripts</strong>. No ads, no spam.</p>
+    </div>
   </section>
 
   <section>
     <h2>Terms of Service</h2>
-    <p>By adding this bot to your server, you agree that:</p>
+    <div class="alert-box">
+      <p><span class="warning-text">Enforcement Policy:</span> Any attempt to use exploits, bugs, or unauthorized modifications is strictly forbidden. <strong>Any violation of these Terms of Service (ToS)</strong> will result in an immediate <span class="highlight">Global Blacklist</span> for the user and/or the server.</p>
+    </div>
     <ul>
-      <li>The bot may read messages required for moderation features.</li>
-      <li>Moderation actions may be logged.</li>
-      <li>You are responsible for configuring the bot properly.</li>
-      <li>The bot owner is not responsible for misuse.</li>
+      <li><strong>Legal Compliance:</strong> You must comply with Discord’s Terms of Service and not use our bot for illegal or harmful activities.</li>
+      <li>Users must not attempt to bypass bot security or rate limits.</li>
+      <li>The bot processes messages for moderation and AutoMod functionality.</li>
+      <li>You are responsible for proper bot configuration.</li>
+      <li>The bot owner is not liable for misuse of moderation tools by server staff.</li>
     </ul>
   </section>
 
-  <section>
-    <h2>Privacy Policy</h2>
-    <p>This bot does not store personal data outside Discord. It only processes information required for moderation and command execution. No data is shared with third parties.</p>
+  <section id="help">
+    <h2>Need Help?</h2>
+    <div class="support-box">
+      <h3>Got questions or issues?</h3>
+      <p>Join our support community and <strong>create a support ticket</strong> for direct assistance from our team.</p>
+      <a class="button support-button" href="https://discord.gg/A8pFNDcE5m">Open Support Ticket</a>
+    </div>
   </section>
 
   <footer>
-    &copy; 2026 Aqua. All rights reserved.
+    &copy; 2026 Aqua Bot. All rights reserved. <br>
+    <small>Secure your Discord community with Aqua.</small>
   </footer>
 
   <script>
