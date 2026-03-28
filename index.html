@@ -6,19 +6,54 @@
   <title>Aqua - Advanced Discord Bot</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
     :root {
-      --primary: #5865F2; /* Discord Blue */
-      --accent: #00ffae;  /* Aqua Green */
-      --premium: #FFD700; /* Premium Gold */
-      --bg: #0a0c10;      /* Deep Background */
-      --card-bg: #161921; /* Card Background */
+      --primary: #5865F2;
+      --accent: #00ffae;
+      --premium: #FFD700;
+      --bg: #0a0c10;
+      --card-bg: #161921;
       --text: #ffffff;
       --text-muted: #aaaaaa;
     }
+
+    /* --- POWIĘKSZONY LOADER --- */
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+
+    .loader {
+      width: 120px;
+      height: 120px;
+      border: 8px solid rgba(255, 255, 255, 0.05);
+      border-top: 8px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+      box-shadow: 0 0 20px rgba(0, 255, 174, 0.15);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loader-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    /* ------------------------ */
 
     body { 
       margin: 0; 
@@ -29,7 +64,6 @@
       overflow-x: hidden;
     }
 
-    /* Radial Glow Background */
     .glow-bg {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -55,7 +89,6 @@
 
     header p { font-size: 1.5em; color: var(--text-muted); max-width: 650px; margin: 25px auto; }
 
-    /* Buttons */
     .button-group { margin-top: 50px; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
     .button { 
       padding: 18px 36px; 
@@ -75,7 +108,6 @@
     .support-button { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
     .support-button:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
 
-    /* Bot Status Indicator */
     #bot-status { 
       margin-bottom: 20px;
       font-size: 0.95em; 
@@ -91,7 +123,6 @@
     }
     .status-dot { width: 10px; height: 10px; background-color: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
 
-    /* Features Grid */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -118,7 +149,6 @@
     .feature-card h3 { color: var(--primary); margin-top: 0; display: flex; align-items: center; gap: 12px; font-size: 1.6em; }
     .feature-card p { color: var(--text-muted); font-size: 1.05em; }
     
-    /* PREMIUM SECTION */
     .premium-section {
       background: linear-gradient(145deg, #1a1c22 0%, #0a0c10 100%);
       border: 2px solid var(--premium);
@@ -164,7 +194,6 @@
 
     .highlight { color: var(--accent); }
 
-    /* DATA & PRIVACY */
     .data-privacy-box {
       background: rgba(255,255,255,0.02); 
       border-radius: 32px; 
@@ -173,7 +202,6 @@
       backdrop-filter: blur(5px);
     }
 
-    /* STATS SECTION */
     .stats-section {
       background: linear-gradient(to top, rgba(88, 101, 242, 0.08), transparent);
       padding: 120px 20px;
@@ -194,39 +222,16 @@
     .stat-item {
       text-align: center;
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      /* Zapobiega trzęsieniu się tekstu poprzez stałą szerokość cyfr */
       font-variant-numeric: tabular-nums;
       min-width: 200px; 
     }
 
-    .stat-item:hover {
-      transform: translateY(-12px);
-    }
+    .stat-item:hover { transform: translateY(-12px); }
 
-    .stat-icon {
-      font-size: 4.5em;
-      color: var(--accent);
-      margin-bottom: 25px;
-      display: block;
-    }
+    .stat-icon { font-size: 4.5em; color: var(--accent); margin-bottom: 25px; display: block; }
+    .stat-label { font-size: 1.3em; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; }
+    .stat-number { font-size: 3.5em; font-weight: 800; color: #fff; letter-spacing: -2px; margin-top: 8px; }
 
-    .stat-label {
-      font-size: 1.3em;
-      font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    .stat-number {
-      font-size: 3.5em;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -2px;
-      margin-top: 8px;
-    }
-
-    /* STOPKA */
     footer { 
       padding: 80px 20px; 
       text-align: center; 
@@ -237,22 +242,23 @@
     footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
     footer a:hover { text-decoration: underline; }
 
-    /* AOS-LIKE ANIMACJE */
     [data-aos] { opacity: 0; transition: 0.7s all ease-out; }
     [data-aos="fade-up"] { transform: translateY(40px); }
     [data-aos="zoom-in"] { transform: scale(0.85); }
     .visible { opacity: 1; transform: translateY(0) scale(1); }
 
-    /* Responsywność dla stats */
     @media (max-width: 768px) {
       .stats-container { gap: 60px; }
       header h1 { font-size: 3.5em; }
       .stat-item { min-width: 150px; }
     }
-
   </style>
 </head>
 <body>
+
+  <div id="loader-wrapper">
+    <div class="loader"></div>
+  </div>
 
   <div class="glow-bg"></div>
 
@@ -326,19 +332,16 @@
   <section class="stats-section">
     <h2 data-aos="fade-up">Trusted by Thousands</h2>
     <div class="stats-container">
-      
       <div class="stat-item" data-aos="zoom-in">
         <i class="fas fa-globe stat-icon"></i>
         <div class="stat-label">Communities</div>
         <div class="stat-number" id="communities-count">0</div>
       </div>
-
       <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
         <i class="fas fa-users stat-icon"></i>
         <div class="stat-label">Users</div>
         <div class="stat-number" id="users-count">0</div>
       </div>
-
     </div>
   </section>
 
@@ -351,56 +354,60 @@
   </footer>
 
   <script>
-    // 1. AOS (Animate On Scroll) Implementation
+    // --- SKRYPT DLA LOADERA I LICZNIKÓW ---
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        // Ukryj loader
+        document.getElementById('loader-wrapper').classList.add('loader-hidden');
+        
+        // WYSTARTUJ ANIMACJĘ LICZNIKÓW DOPIERO TERAZ
+        countsStart();
+      }, 1500); // 1.5 sekundy ładowania
+    });
+
+    // AOS (Animate on Scroll) logic
     const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          if (entry.target.classList.contains('stats-section')) countsStart();
+          // Jeśli zjedziesz na dół zanim skończy się loader, to sprawdzamy czy countsAnimated jest false
+          if (entry.target.classList.contains('stats-section')) {
+             // Statystyki odpalą się tylko jeśli loader już zniknął
+             if (document.getElementById('loader-wrapper').classList.contains('loader-hidden')) {
+                countsStart();
+             }
+          }
         }
       });
     }, observerOptions);
 
     document.querySelectorAll('[data-aos], .stats-section').forEach(el => observer.observe(el));
 
-
-    // 2. Naprawiony CountUp Animation Script
     const animateValue = (id, start, end, duration) => {
       const obj = document.getElementById(id);
       const startTime = performance.now();
-
       const timer = (now) => {
         const timeElapsed = now - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
-        
-        // Easing function (easeOutExpo) dla płynniejszego efektu
         const easeOut = 1 - Math.pow(2, -10 * progress);
         const current = start + (end - start) * easeOut;
-        
-        // Formatowanie liczby
         obj.textContent = Math.round(current).toLocaleString('pl-PL');
-        
-        if (progress < 1) {
-          requestAnimationFrame(timer);
-        } else {
-          obj.textContent = end.toLocaleString('pl-PL');
-        }
+        if (progress < 1) requestAnimationFrame(timer);
+        else obj.textContent = end.toLocaleString('pl-PL');
       };
-      
       requestAnimationFrame(timer);
     };
 
     let countsAnimated = false; 
     const countsStart = () => {
+      // Zapobiegamy podwójnemu odpaleniu
       if (!countsAnimated) {
-        // Obie liczby startują teraz z tą samą logiką animacji
         animateValue("communities-count", 0, 22, 2500);
         animateValue("users-count", 0, 920, 2500);
         countsAnimated = true;
       }
     };
   </script>
-
 </body>
 </html>
