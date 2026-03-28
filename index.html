@@ -53,7 +53,6 @@
       opacity: 0;
       visibility: hidden;
     }
-    /* ------------------------ */
 
     body { 
       margin: 0; 
@@ -354,15 +353,18 @@
   </footer>
 
   <script>
-    // --- SKRYPT DLA LOADERA I LICZNIKÓW ---
+    // --- LOSOWANIE CZASU ŁADOWANIA ---
+    const loadTimes = [500, 1000, 1500];
+    const randomTime = loadTimes[Math.floor(Math.random() * loadTimes.length)];
+
     window.addEventListener('load', () => {
       setTimeout(() => {
         // Ukryj loader
         document.getElementById('loader-wrapper').classList.add('loader-hidden');
         
-        // WYSTARTUJ ANIMACJĘ LICZNIKÓW DOPIERO TERAZ
+        // Wystartuj liczniki
         countsStart();
-      }, 1500); // 1.5 sekundy ładowania
+      }, randomTime);
     });
 
     // AOS (Animate on Scroll) logic
@@ -371,9 +373,7 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          // Jeśli zjedziesz na dół zanim skończy się loader, to sprawdzamy czy countsAnimated jest false
           if (entry.target.classList.contains('stats-section')) {
-             // Statystyki odpalą się tylko jeśli loader już zniknął
              if (document.getElementById('loader-wrapper').classList.contains('loader-hidden')) {
                 countsStart();
              }
@@ -401,7 +401,6 @@
 
     let countsAnimated = false; 
     const countsStart = () => {
-      // Zapobiegamy podwójnemu odpaleniu
       if (!countsAnimated) {
         animateValue("communities-count", 0, 22, 2500);
         animateValue("users-count", 0, 919, 2500);
