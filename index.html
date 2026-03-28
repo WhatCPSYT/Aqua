@@ -1,166 +1,403 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aqua - Discord Moderation Bot</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    body { margin: 0; font-family: 'Inter', sans-serif; background: #0f1117; color: #fff; line-height: 1.6; }
-    header { background: #1a1c22; padding: 60px 20px; text-align: center; border-bottom: 2px solid #5865F2; }
-    header h1 { font-size: 3.5em; margin: 0; font-weight: 800; letter-spacing: -1px; }
-    header p { font-size: 1.2em; margin-top: 10px; color: #ccc; }
-    
-    .button-group { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-    .button { display: inline-block; padding: 14px 28px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: all 0.3s; cursor: pointer; }
-    .invite-button { background: #5865F2; color: #fff; }
-    .invite-button:hover { background: #4752c4; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4); }
-    .support-button { background: #23272a; color: #fff; border: 1px solid #5865F2; }
-    .support-button:hover { background: #2c2f33; border-color: #00ffae; transform: translateY(-2px); }
+  <title>Aqua - Advanced Discord Bot</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    #bot-status { margin-top: 20px; font-size: 1.1em; font-weight: 600; background: rgba(0,0,0,0.3); display: inline-block; padding: 6px 18px; border-radius: 20px; }
+  <style>
+    :root {
+      --primary: #5865F2; /* Discord Blue */
+      --accent: #00ffae;  /* Aqua Green */
+      --premium: #FFD700; /* Premium Gold */
+      --bg: #0a0c10;      /* Deep Background */
+      --card-bg: #161921; /* Card Background */
+      --text: #ffffff;
+      --text-muted: #aaaaaa;
+    }
+
+    body { 
+      margin: 0; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Radial Glow Background */
+    .glow-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% -20%, #2c2f50 0%, #0a0c10 45%);
+      z-index: -1;
+    }
+
+    header { 
+      padding: 120px 20px 80px 20px; 
+      text-align: center; 
+      position: relative;
+    }
+
+    header h1 { 
+      font-size: 5em; 
+      margin: 0; 
+      font-weight: 800; 
+      letter-spacing: -3px;
+      background: linear-gradient(to bottom, #fff, #888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p { font-size: 1.5em; color: var(--text-muted); max-width: 650px; margin: 25px auto; }
+
+    /* Buttons */
+    .button-group { margin-top: 50px; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+    .button { 
+      padding: 18px 36px; 
+      font-weight: 700; 
+      border-radius: 14px; 
+      text-decoration: none; 
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      cursor: pointer;
+      font-size: 1.15em;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .invite-button { background: var(--primary); color: #fff; box-shadow: 0 10px 20px rgba(88, 101, 242, 0.2); }
+    .invite-button:hover { transform: scale(1.05); box-shadow: 0 15px 25px rgba(88, 101, 242, 0.4); }
     
-    section { padding: 40px 20px; max-width: 900px; margin: auto; }
-    h2 { font-size: 2em; margin-bottom: 20px; font-weight: 700; color: #00ffae; border-bottom: 1px solid #333; padding-bottom: 10px; }
-    h3 { color: #5865F2; margin-top: 25px; font-size: 1.4em; }
+    .support-button { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+    .support-button:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
+
+    /* Bot Status Indicator */
+    #bot-status { 
+      margin-bottom: 20px;
+      font-size: 0.95em; 
+      background: rgba(0, 255, 174, 0.1); 
+      color: var(--accent);
+      display: inline-flex; 
+      align-items: center;
+      gap: 8px;
+      padding: 10px 25px; 
+      border-radius: 100px; 
+      border: 1px solid rgba(0, 255, 174, 0.2);
+      font-weight: 600;
+    }
+    .status-dot { width: 10px; height: 10px; background-color: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      padding: 60px 0;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 35px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .feature-card h3 { color: var(--primary); margin-top: 0; display: flex; align-items: center; gap: 12px; font-size: 1.6em; }
+    .feature-card p { color: var(--text-muted); font-size: 1.05em; }
     
-    ul { list-style: none; padding: 0; }
-    ul li { margin-bottom: 10px; padding-left: 30px; position: relative; }
-    ul li::before { content: "✔"; position: absolute; left: 0; color: #00ffae; font-weight: bold; }
-    
-    .alert-box { background: rgba(255, 71, 71, 0.1); border: 1px solid #ff4747; border-left: 5px solid #ff4747; padding: 20px; border-radius: 8px; margin: 20px 0; }
-    .info-box { background: #1a1c22; padding: 25px; border-radius: 12px; border: 1px solid #333; margin: 20px 0; }
-    .support-box { background: linear-gradient(135deg, #1a1c22 0%, #23272a 100%); border: 1px solid #5865F2; text-align: center; padding: 30px; border-radius: 15px; margin-top: 20px; }
-    
-    .data-section { background: rgba(0, 255, 174, 0.05); border: 1px dashed #00ffae; padding: 25px; border-radius: 12px; margin: 20px 0; }
-    .highlight { color: #00ffae; font-weight: 600; }
-    .warning-text { color: #ff4747; font-weight: 800; text-transform: uppercase; }
-    
-    footer { background: #1a1c22; padding: 40px; text-align: center; font-size: 0.9em; color: #aaa; margin-top: 40px; border-top: 1px solid #333; }
-    a { color: #00ffae; text-decoration: none; transition: 0.2s; }
-    a:hover { text-decoration: underline; color: #00cc8b; }
+    /* PREMIUM SECTION */
+    .premium-section {
+      background: linear-gradient(145deg, #1a1c22 0%, #0a0c10 100%);
+      border: 2px solid var(--premium);
+      padding: 50px;
+      border-radius: 30px;
+      margin: 80px 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
+    }
+
+    .premium-badge {
+      position: absolute;
+      top: 15px; right: -35px;
+      background: var(--premium);
+      color: #000;
+      padding: 8px 50px;
+      font-weight: 800;
+      transform: rotate(25deg);
+      font-size: 0.9em;
+      letter-spacing: 1px;
+    }
+
+    .premium-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .premium-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    .premium-item i { color: var(--premium); font-size: 1.2em; }
+
+    section { padding: 100px 20px; max-width: 1200px; margin: auto; }
+    h2 { font-size: 3em; text-align: center; margin-bottom: 60px; font-weight: 800; letter-spacing: -1.5px; }
+
+    .highlight { color: var(--accent); }
+
+    /* DATA & PRIVACY */
+    .data-privacy-box {
+      background: rgba(255,255,255,0.02); 
+      border-radius: 32px; 
+      padding: 70px;
+      border: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    /* STATS SECTION (Nowa, na samym dole) */
+    .stats-section {
+      background: linear-gradient(to top, rgba(88, 101, 242, 0.08), transparent);
+      padding: 120px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-radius: 50px 50px 0 0;
+    }
+
+    .stats-container {
+      display: flex;
+      justify-content: center;
+      gap: 120px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 50px auto;
+    }
+
+    .stat-item {
+      text-align: center;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-12px);
+    }
+
+    .stat-icon {
+      font-size: 4.5em;
+      color: var(--accent);
+      margin-bottom: 25px;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 1.3em;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .stat-number {
+      font-size: 3.5em;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -2px;
+      margin-top: 8px;
+    }
+
+    /* STOPKA */
+    footer { 
+      padding: 80px 20px; 
+      text-align: center; 
+      background: #050608; 
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: var(--text-muted);
+    }
+    footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    footer a:hover { text-decoration: underline; }
+
+    /* AOS-LIKE ANIMACJE */
+    [data-aos] { opacity: 0; transition: 0.7s all ease-out; }
+    [data-aos="fade-up"] { transform: translateY(40px); }
+    [data-aos="zoom-in"] { transform: scale(0.85); }
+    .visible { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Responsywność dla stats */
+    @media (max-width: 768px) {
+      .stats-container { gap: 60px; }
+      header h1 { font-size: 3.5em; }
+    }
+
   </style>
 </head>
 <body>
 
+  <div class="glow-bg"></div>
+
   <header>
-    <h1>Aqua</h1>
-    <p>A powerful and easy-to-use moderation bot for Discord servers.</p>
+    <div id="bot-status"><div class="status-dot"></div>● System Online</div>
+    <h1>Aqua Bot</h1>
+    <p>Professional moderation, high-fidelity music, and server management tools in one powerful Discord application.</p>
     <div class="button-group">
-      <a class="button invite-button" href="https://discord.com/oauth2/authorize?client_id=1446441186150584383">Add to Server</a>
-      <a class="button support-button" href="https://discord.gg/A8pFNDcE5m">Join Support Server</a>
+      <a class="button invite-button" href="https://discord.com/oauth2/authorize?client_id=1446441186150584383"><i class="fab fa-discord"></i> Add to Discord</a>
+      <a class="button support-button" href="https://discord.gg/A8pFNDcE5m"><i class="fas fa-headset"></i> Get Support</a>
     </div>
-    <p id="bot-status">Status: ⏳ Checking...</p>
   </header>
 
-  <section>
-    <h2>Bot Features</h2>
+  <section id="features">
+    <h2 data-aos="fade-up">Why Choose <span class="highlight">Aqua</span>?</h2>
     
-    <h3>Advanced Moderation</h3>
-    <ul>
-      <li>Comprehensive moderation suite including warn, mute, kick, and ban commands</li>
-      <li>Voice-specific tools to manage members in voice channels (vckick, vcdeafen)</li>
-      <li>Advanced warning system with permanent history tracking and /warnings access</li>
-      <li>Smart automated features like timer-based unmutes and undeafens</li>
-      <li>Reliable security using modern Discord timeout-based moderation</li>
-    </ul>
-
-    <h3>Global AutoMod & Security</h3>
-    <ul>
-      <li>Powerful keyword filtering, anti-spam protection, and mention limits</li>
-      <li>Global link blocking system to keep your community safe from harmful content</li>
-      <li>One-click automated AutoMod rule setup via dedicated /automod commands</li>
-      <li>Detailed staff logs with timestamps, reasons, and target tracking</li>
-    </ul>
-
-    <h3>Music & Entertainment</h3>
-    <ul>
-      <li>High-fidelity music player with support for search and direct links</li>
-      <li>Full playback control with intuitive play, pause, and skip commands</li>
-      <li>Smart auto-disconnect system to save resources when the channel is empty</li>
-      <li>Professional text notifications for music events and status updates</li>
-    </ul>
-
-    <h3>Ticket System</h3>
-    <ul>
-      <li>Professional support system featuring fully customizable ticket panels</li>
-      <li>Flexible configuration for titles, descriptions, and interactive button labels</li>
-      <li>Safe archiving with automated transcripts sent upon request</li>
-      <li>Optimized workflow for both your staff and your community members</li>
-    </ul>
-
-    <h3>Verification System</h3>
-    <ul>
-      <li>Secure your community with a professional and customizable verification gate</li>
-      <li>Full control over the verification panel's look and feel to match your server</li>
-      <li>Robust protection designed to block automated bots and prevent malicious raids</li>
-    </ul>
-
-    <h3>Utility & Tools</h3>
-    <ul>
-      <li>Generate custom QR codes instantly from any text or link for easy sharing</li>
-      <li>In-chat mathematical calculator for quick expressions and problem solving</li>
-      <li>Multilingual translation tool to bridge communication gaps in your server</li>
-      <li>Fast bulk-message deletion to keep your channels clean and organized</li>
-      <li>Instant access to bot performance statistics and real-time uptime monitoring</li>
-      <li>Detailed server overview with statistics, owner info, and channel breakdowns</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Data Management & Privacy</h2>
-    <div class="data-section">
-      <h3>Your Data, Your Rights</h3>
-      <p>Aqua stores moderation-related data (warnings, ticket setups, logs). You have the right to:</p>
-      <ul>
-        <li><strong>Request Data:</strong> Get a copy of all stored info regarding your user or server.</li>
-        <li><strong>Delete Data:</strong> Request permanent removal of all your data from our system.</li>
-      </ul>
-      <p>To exercise these rights, join our <a href="https://discord.gg/A8pFNDcE5m" class="highlight">Support Server</a> or contact us via email.</p>
-    </div>
-
-    <div class="info-box">
-      <p><strong>Voice & Chat Privacy:</strong> <span class="highlight">Aqua does not record or listen to your voice conversations.</span> Similarly, <span class="highlight">no messages are ever recorded or stored</span>; content is processed in-memory only for AutoMod filtering and immediately discarded.</p>
-      <p><strong>DM Policy:</strong> <span class="highlight">Aqua will never send unsolicited DMs.</span> DMs are sent ONLY for <strong>Ticket Transcripts</strong> at your request.</p>
-    </div>
-  </section>
-
-  <section>
-    <h2>Terms of Service</h2>
-    <div class="alert-box">
-      <p><span class="warning-text">Enforcement Policy:</span> Any attempt to use exploits, bugs, or unauthorized modifications is strictly forbidden. <strong>Any violation of these Terms of Service (ToS)</strong> will result in an immediate <span class="highlight">Global Blacklist</span> for the user and/or the server.</p>
-    </div>
-    <ul>
-      <li><strong>Legal Compliance:</strong> You must comply with Discord’s Terms of Service and not use our bot for illegal or harmful activities.</li>
-      <li>Users must not attempt to bypass bot security or rate limits.</li>
-      <li>The bot owner is not liable for misuse of moderation tools by server staff.</li>
-    </ul>
-  </section>
-
-  <section id="help">
-    <h2>Need Help?</h2>
-    <div class="support-box">
-      <h3>Got questions or issues?</h3>
-      <p>If you have any questions regarding Aqua, feel free to ask! Join our community or send us an email directly.</p>
-      <div class="button-group">
-        <a class="button support-button" href="https://discord.gg/A8pFNDcE5m">Join Support Server</a>
-        <a class="button invite-button" href="mailto:contactaquabot@gmail.com">Email Us</a>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up">
+        <h3>🛡️ Moderation</h3>
+        <p>Comprehensive tools including Warn, Mute, Kick, and Ban. Secure your server using modern Discord timeout systems.</p>
       </div>
-      <p style="margin-top: 15px;">Contact: <span class="highlight">contactaquabot@gmail.com</span></p>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>🎵 High-End Music</h3>
+        <p>Listen to crystal clear audio from YouTube and Spotify. Includes filters (Bassboost, 8D) and advanced playback control.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>🎫 Ticket System</h3>
+        <p>Professional support panels with custom descriptions, interactive buttons, and automated transcripts via DM.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up">
+        <h3>🤖 AutoMod</h3>
+        <p>Protect your server 24/7. Automatic keyword blocking, anti-spam, mention limits, and link protection.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>✅ Verification</h3>
+        <p>Stop raids before they start with a secure, button-based verification gate for all new members.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>⚙️ Utility Tools</h3>
+        <p>QR Code generation, instant translations, advanced calculator, and deep server statistics.</p>
+      </div>
+    </div>
+
+    <div class="premium-section" data-aos="zoom-in">
+      <div class="premium-badge">PREMIUM</div>
+      <h2 style="text-align: left; margin-bottom: 25px; color: var(--premium); font-size: 2.5em;">Upgrade to Aqua Premium</h2>
+      <p style="margin-bottom: 35px; font-size: 1.2em; max-width: 800px;">Unlock professional tools for elite server management. Just <b>$1.50</b> monthly. Fast activation via Ticket!</p>
+      
+      <div class="premium-list">
+        <div class="premium-item"><i class="fas fa-diamond"></i> ✨ /nuke - Recreate channels</div>
+        <div class="premium-item"><i class="fas fa-diamond"></i> ✨ /massmove - Move entire VC</div>
+        <div class="premium-item"><i class="fas fa-diamond"></i> ✨ /massban - Ban by User IDs</div>
+        <div class="premium-item"><i class="fas fa-diamond"></i> ✨ /shuffle - Randomize music</div>
+        <div class="premium-item"><i class="fas fa-diamond"></i> ✨ Audio Filters (Bass, 8D, Nightcore)</div>
+        <div class="premium-item"><i class="fas fa-diamond"></i> ✨ Purge up to 500 messages</div>
+      </div>
+      
+      <div class="button-group" style="justify-content: flex-start; margin-top: 40px;">
+        <a class="button invite-button" style="background: var(--premium); color: #000;" href="https://discord.gg/A8pFNDcE5m"><i class="fas fa-ticket-alt"></i> Get Premium via Ticket</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" data-aos="fade-up">
+    <div class="data-privacy-box">
+      <h2>Data & Privacy Policy</h2>
+      <p style="font-size: 1.1em; text-align: center; max-width: 900px; margin: 0 auto;">We prioritize security and user rights. Aqua processes messages in-memory for AutoMod filtering and **never** stores chat logs or records voice conversations. You can request data deletion at any time via our support server.</p>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <h2 data-aos="fade-up">Trusted by Thousands</h2>
+    <div class="stats-container">
+      
+      <div class="stat-item" data-aos="zoom-in">
+        <i class="fas fa-globe stat-icon"></i>
+        <div class="stat-label">Communities</div>
+        <div class="stat-number" id="communities-count">0</div>
+      </div>
+
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+        <i class="fas fa-users stat-icon"></i>
+        <div class="stat-label">Users</div>
+        <div class="stat-number" id="users-count">0</div>
+      </div>
+
     </div>
   </section>
 
   <footer>
-    &copy; 2026 Aqua Bot. All rights reserved. <br>
-    Contact: <a href="mailto:contactaquabot@gmail.com">contactaquabot@gmail.com</a> <br>
-    <small>Secure your Discord community with Aqua.</small>
+    <p>&copy; 2026 Aqua Development • Professional Discord Solutions</p>
+    <p style="font-size: 0.85em; margin-top: 10px; color: #555;">Not affiliated with Discord Inc.</p>
+    <div class="button-group" style="margin-top: 25px;">
+        <a href="mailto:contactaquabot@gmail.com"><i class="fas fa-envelope"></i> contactaquabot@gmail.com</a>
+    </div>
   </footer>
 
   <script>
-    const manualStatus = "🟢 Online";
-    const statusElement = document.getElementById("bot-status");
-    statusElement.textContent = "Status: " + manualStatus;
-    statusElement.style.color = "#ffffff";
+    // 1. AOS (Animate On Scroll) Implementation
+    const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Jeśli to sekcja statystyk, odpal liczniki
+          if (entry.target.classList.contains('stats-section')) countsStart();
+        }
+      });
+    }, observerOptions);
+
+    // Wybierz wszystkie elementy do animacji
+    document.querySelectorAll('[data-aos], .stats-section').forEach(el => observer.observe(el));
+
+
+    // 2. CountUp Animation Script
+    const animateValue = (id, start, end, duration) => {
+      let current = start;
+      const range = end - start;
+      const obj = document.getElementById(id);
+      
+      const startTime = performance.now();
+
+      const timer = (now) => {
+        const timeElapsed = now - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        current = start + range * progress;
+        obj.textContent = Math.round(current).toLocaleString('pl-PL'); // Formatowanie z odstępami (np. 1 234 567)
+        
+        if (progress < 1) {
+          requestAnimationFrame(timer);
+        } else {
+          obj.textContent = end.toLocaleString('pl-PL'); // Pewność, że końcowa liczba jest dokładna
+        }
+      };
+      
+      requestAnimationFrame(timer);
+    };
+
+    // Funkcja odpalająca liczniki
+    let countsAnimated = false; // Zapobiega wielokrotnemu odpalaniu
+    const countsStart = () => {
+      if (!countsAnimated) {
+        animateValue("communities-count", 0, 22, 2500); // 2.5 sekundy
+        animateValue("users-count", 0, 920, 2500);
+        countsAnimated = true;
+      }
+    };
+
   </script>
 
 </body>
