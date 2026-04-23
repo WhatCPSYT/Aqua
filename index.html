@@ -266,7 +266,7 @@
     }
 
     // TUTAJ ZMIENIASZ STATUS: 'online', 'offline', 'maintenance', 'malfunction'
-    setBotStatus('offline'); 
+    setBotStatus('online'); 
 
     // --- ŁADOWANIE ---
     window.addEventListener('load', () => {
@@ -301,7 +301,7 @@
     const countsStart = () => {
       if (!countsAnimated) {
         animateValue("communities-count", 0, 36, 2500);
-        animateValue("users-count", 0, 1267, 2500);
+        animateValue("users-count", 0, 1283, 2500);
         countsAnimated = true;
       }
     };
