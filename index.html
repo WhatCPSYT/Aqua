@@ -227,11 +227,11 @@
       <h2>Trusted by Thousands</h2>
       <div class="stats-container">
         <div class="stat-item">
-          <span class="stat-number">44</span>
-          <div style="font-weight: 700; color: #5dade2">Communities</div>
+          <span class="stat-number">46</span>
+          <div style="font-weight: 700; color: #5dade2">Servers</div>
         </div>
         <div class="stat-item">
-          <span class="stat-number">1,452</span>
+          <span class="stat-number">1,940</span>
           <div style="font-weight: 700; color: #5dade2">Users</div>
         </div>
       </div>
@@ -269,9 +269,8 @@
     }
 
     // TUTAJ ZMIENIASZ STATUS: 'online', 'offline', 'maintenance', 'malfunction'
-    setBotStatus('offline'); 
+    setBotStatus('online'); 
 
-    // AOS logic
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
