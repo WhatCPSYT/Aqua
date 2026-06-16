@@ -144,7 +144,7 @@
     <br>
     <div id="bot-status">
       <div class="status-dot"></div>
-      <span id="status-text">System Online</span>
+      <span id="status-text">System Loading...</span>
     </div>
     <h1>Aqua Bot</h1>
     <p>Professional moderation, high-fidelity music, and server management tools in one powerful Discord bot.</p>
@@ -156,70 +156,8 @@
 
   <section id="features">
     <h2 data-aos="fade-up">Why Choose <span style="color: #5dade2">Aqua</span>?</h2>
-    
     <div class="features-grid">
-      <div class="feature-card" data-aos="fade-up">
-        <h3>🛡️ Moderation</h3>
-        <p>Comprehensive tools including warn, mute, kick, ban and more. Secure your server using modern Discord timeout systems.</p>
       </div>
-      <div class="feature-card" data-aos="fade-up">
-        <h3>🎵 High-End Music</h3>
-        <p>Listen to crystal-clear music. Includes filters (Bass Boost, 8D, and more) and advanced playback controls.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up">
-        <h3>🎫 Ticket System</h3>
-        <p>Professional support panels with custom descriptions, interactive buttons, and automated transcripts via DM.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up">
-        <h3>🤖 AutoMod</h3>
-        <p>Protect your server 24/7. Automatic keyword blocking, anti-spam, mention limits, and link protection.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up">
-        <h3>✅ Verification</h3>
-        <p>Stop raids before they start with a secure, button-based verification gate for all new members.</p>
-      </div>
-      <div class="feature-card" data-aos="fade-up">
-        <h3>⚙️ Utility Tools</h3>
-        <p>QR Code generation, instant translations, advanced calculator, and deep server statistics.</p>
-      </div>
-    </div>
-
-    <div class="premium-section" data-aos="fade-up">
-      <div class="premium-badge">PLUS</div>
-      <h2 style="text-align: left; margin-bottom: 10px; color: #b8860b;">Upgrade to Aqua Plus</h2>
-      <p>Unlock professional tools for elite server management. Just <b>$1.50</b> monthly. Fast activation!</p>
-      
-      <div class="premium-grid">
-        <div class="premium-box">
-          <b><i class="fas fa-bomb"></i> /nuke</b>
-          <span>Instantly clear a channel's message history by creating a fresh, clean copy with one click.</span>
-        </div>
-        <div class="premium-box">
-          <b><i class="fas fa-arrows-alt"></i> /massmove</b>
-          <span>Efficiently move every user from one voice channel to another in a single second.</span>
-        </div>
-        <div class="premium-box">
-          <b><i class="fas fa-user-slash"></i> /massban</b>
-          <span>Secure your community against raids by banning multiple malicious users at once via their IDs.</span>
-        </div>
-        <div class="premium-box">
-          <b><i class="fas fa-random"></i> /shuffle</b>
-          <span>Keep your music queue fresh and unpredictable by randomizing the playback order.</span>
-        </div>
-        <div class="premium-box">
-          <b><i class="fas fa-magic"></i> Audio Filters</b>
-          <span>Enhance your listening experience with high-quality filters like Bass Boost, 8D, and Nightcore.</span>
-        </div>
-        <div class="premium-box">
-          <b><i class="fas fa-broom"></i> Extended Purge</b>
-          <span>Maintain perfect order by deleting up to 500 messages at once, far beyond the standard limits.</span>
-        </div>
-      </div>
-      
-      <div class="button-group" style="justify-content: flex-start; margin-top: 30px;">
-        <a class="button invite-button" style="background: var(--premium); color: #000;" href="https://discord.gg/A8pFNDcE5m">Activate Aqua Plus via Ticket</a>
-      </div>
-    </div>
   </section>
 
   <section id="stats" data-aos="fade-up">
@@ -227,11 +165,11 @@
       <h2>Trusted by Thousands</h2>
       <div class="stats-container">
         <div class="stat-item">
-          <span class="stat-number">70</span>
+          <span class="stat-number">0</span>
           <div style="font-weight: 700; color: #5dade2">Servers</div>
         </div>
         <div class="stat-item">
-          <span class="stat-number">3,789</span>
+          <span class="stat-number">0</span>
           <div style="font-weight: 700; color: #5dade2">Users</div>
         </div>
       </div>
@@ -240,10 +178,6 @@
 
 <footer>
   <p>&copy; 2026 Aqua | All rights reserved</p>
-  <p>
-    <a href="/terms/" style="color: var(--text-muted); text-decoration: none; margin: 0 10px;">Terms of Service</a> | 
-    <a href="/privacy/" style="color: var(--text-muted); text-decoration: none; margin: 0 10px;">Privacy Policy</a>
-  </p>
 </footer>
 
   <script>
@@ -253,26 +187,28 @@
         container.className = ''; 
         
         switch(status.toLowerCase()) {
-            case 'online':
-                container.classList.add('online');
-                text.innerText = 'System Online';
-                break;
-            case 'offline':
-                container.classList.add('offline');
-                text.innerText = 'System Offline';
-                break;
-            case 'maintenance':
-                container.classList.add('maintenance');
-                text.innerText = 'Maintenance';
-                break;
-            case 'malfunction':
-                container.classList.add('malfunction');
-                text.innerText = 'Malfunction';
-                break;
+            case 'online': container.classList.add('online'); text.innerText = 'System Online'; break;
+            case 'offline': container.classList.add('offline'); text.innerText = 'System Offline'; break;
+            case 'maintenance': container.classList.add('maintenance'); text.innerText = 'Maintenance'; break;
+            case 'malfunction': container.classList.add('malfunction'); text.innerText = 'Malfunction'; break;
         }
     }
 
-    setBotStatus('online'); 
+    async function fetchStats() {
+        try {
+            const response = await fetch('/api/stats');
+            const data = await response.json();
+            
+            document.querySelectorAll('.stat-number')[0].innerText = data.serverCount.toLocaleString();
+            document.querySelectorAll('.stat-number')[1].innerText = data.memberCount.toLocaleString();
+            setBotStatus(data.status);
+        } catch (e) {
+            setBotStatus('offline');
+        }
+    }
+
+    fetchStats();
+    setInterval(fetchStats, 60000);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
