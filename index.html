@@ -278,11 +278,13 @@
     async function fetchStats() {
         try {
             const response = await fetch('/api/stats');
+            if (!response.ok) throw new Error("API error");
+            
             const data = await response.json();
             
             document.getElementById('server-count').innerText = data.serverCount.toLocaleString();
             document.getElementById('member-count').innerText = data.memberCount.toLocaleString();
-            setBotStatus(data.status);
+            setBotStatus(data.status || 'online');
         } catch (e) {
             setBotStatus('offline');
         }
