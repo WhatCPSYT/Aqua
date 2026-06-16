@@ -144,7 +144,7 @@
     <br>
     <div id="bot-status">
       <div class="status-dot"></div>
-      <span id="status-text">Connecting...</span>
+      <span id="status-text">System Online</span>
     </div>
     <h1>Aqua Bot</h1>
     <p>Professional moderation, high-fidelity music, and server management tools in one powerful Discord bot.</p>
@@ -227,11 +227,11 @@
       <h2>Trusted by Thousands</h2>
       <div class="stats-container">
         <div class="stat-item">
-          <span class="stat-number" id="server-count">0</span>
+          <span class="stat-number">70</span>
           <div style="font-weight: 700; color: #5dade2">Servers</div>
         </div>
         <div class="stat-item">
-          <span class="stat-number" id="member-count">0</span>
+          <span class="stat-number">3,820</span>
           <div style="font-weight: 700; color: #5dade2">Users</div>
         </div>
       </div>
@@ -269,29 +269,10 @@
                 container.classList.add('malfunction');
                 text.innerText = 'Malfunction';
                 break;
-            default:
-                container.classList.add('offline');
-                text.innerText = 'System Offline';
         }
     }
 
-    async function fetchStats() {
-        try {
-            const response = await fetch('/api/stats');
-            if (!response.ok) throw new Error("API error");
-            
-            const data = await response.json();
-            
-            document.getElementById('server-count').innerText = data.serverCount.toLocaleString();
-            document.getElementById('member-count').innerText = data.memberCount.toLocaleString();
-            setBotStatus(data.status || 'online');
-        } catch (e) {
-            setBotStatus('offline');
-        }
-    }
-
-    fetchStats();
-    setInterval(fetchStats, 60000);
+    setBotStatus('online'); 
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
