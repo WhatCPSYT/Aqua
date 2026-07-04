@@ -24,6 +24,10 @@
       --maintenance: #888;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body { 
       margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
       background: var(--bg); color: var(--text); 
@@ -38,7 +42,68 @@
       z-index: -1;
     }
 
-    header { padding: 100px 20px 60px 20px; text-align: center; }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(185, 233, 255, 0.5);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.3em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--aqua-light);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 1.05em;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a:hover {
+      color: #5dade2;
+    }
+
+    @media (max-width: 600px) {
+      .navbar { padding: 15px 20px; }
+      .nav-links { gap: 15px; }
+      .nav-links a span { display: none; }
+    }
+
+    header { padding: 140px 20px 60px 20px; text-align: center; }
     
     .bot-logo {
       width: 120px; height: 120px;
@@ -107,6 +172,7 @@
       background: white; border: 3px solid var(--premium);
       padding: 50px 40px; border-radius: 40px; margin: 60px 0; position: relative;
       box-shadow: 0 20px 40px rgba(255, 215, 0, 0.1);
+      scroll-margin-top: 100px;
     }
     .premium-badge { position: absolute; top: 15px; right: 20px; background: var(--premium); color: #fff; padding: 6px 20px; border-radius: 12px; font-weight: 800; font-size: 0.9em; }
     
@@ -121,6 +187,56 @@
     }
     .premium-box b { color: #b8860b; display: block; font-size: 1.1em; margin-bottom: 5px; }
     .premium-box span { font-size: 0.95em; color: var(--text-muted); }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 40px auto 0 auto;
+      text-align: left;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 2px solid var(--aqua-light);
+      border-radius: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.01);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .faq-item:hover {
+      border-color: #5dade2;
+    }
+    .faq-item summary {
+      padding: 20px;
+      font-weight: 700;
+      font-size: 1.1em;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-item summary::after {
+      content: '\f078';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      font-size: 0.9em;
+      color: var(--text-muted);
+      transition: 0.3s;
+    }
+    .faq-item[open] summary::after {
+      transform: rotate(180deg);
+      color: #5dade2;
+    }
+    .faq-content {
+      padding: 0 20px 20px 20px;
+      color: var(--text-muted);
+      border-top: 1px dashed var(--aqua-light);
+      padding-top: 15px;
+    }
 
     .content-box {
       background: white; border-radius: 40px; padding: 50px;
@@ -138,6 +254,17 @@
 <body>
 
   <div class="glow-bg"></div>
+
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <img src="https://raw.githubusercontent.com/WhatCPSYT/Aqua/main/logo2circle.png" alt="Aqua Logo">
+      <span>Aqua</span>
+    </a>
+    <div class="nav-links">
+      <a href="https://discord.gg/H4qCpESV8D" target="_blank"><i class="fab fa-discord"></i> <span>Discord</span></a>
+      <a href="#pricing"><i class="fas fa-gem"></i> <span>Pricing</span></a>
+    </div>
+  </nav>
 
   <header>
     <img src="https://raw.githubusercontent.com/WhatCPSYT/Aqua/main/logo2circle.png" class="bot-logo" alt="Aqua Logo">
@@ -184,10 +311,10 @@
       </div>
     </div>
 
-    <div class="premium-section" data-aos="fade-up">
+    <div id="pricing" class="premium-section" data-aos="fade-up">
       <div class="premium-badge">PLUS</div>
       <h2 style="text-align: left; margin-bottom: 10px; color: #b8860b;">Upgrade to Aqua Plus</h2>
-      <p>Unlock professional tools for elite server management. Just <b>$1.50</b> monthly. Fast activation!</p>
+      <p>Unlock professional tools for elite server management. Just <b>$2.50</b> monthly. Fast activation!</p>
       
       <div class="premium-grid">
         <div class="premium-box">
@@ -219,6 +346,38 @@
       <div class="button-group" style="justify-content: flex-start; margin-top: 30px;">
         <a class="button invite-button" style="background: var(--premium); color: #000;" href="https://discord.gg/A8pFNDcE5m">Activate Aqua Plus via Ticket</a>
       </div>
+    </div>
+
+    <div class="faq-container" data-aos="fade-up">
+      <h2 style="margin-bottom: 30px;">Frequently Asked Questions</h2>
+      
+      <details class="faq-item">
+        <summary>What is Aqua? </summary>
+        <div class="faq-content">
+          Aqua is an advanced, all-in-one Discord bot built to handle your server configuration seamlessly. It features advanced moderation utilities, high-fidelity music utilities with custom filters, interactive ticket management systems, secure verification portals, and powerful AutoMod layers.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is Aqua free to use?</summary>
+        <div class="faq-content">
+          Yes! All base components (such as standard verification gates, standard tickets, fundamental auto-moderation settings, and crystal-clear music playbacks) are completely free. Advanced automation layers and structural clean utilities can be unlocked via Aqua Plus.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is Aqua safe and secure?</summary>
+        <div class="faq-content">
+          Absolutely. Aqua treats data privacy with utmost priority. All stored databases are fully secured and encrypted, and we strictly enforce a zero third-party disclosure policy. Chat logs are scanned in live system memory for AutoMod evaluations and instantly deleted within seconds.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why does the bot occasionally go offline?</summary>
+        <div class="faq-content">
+          Aqua is currently operated as a localized passion project hosted on a dedicated mini PC setup. Due to this home-hosting nature, occasional local power spikes, ISP network distributions, or brief engine script reboots (taking roughly 3 seconds) can create short windows of downtime.
+        </div>
+      </details>
     </div>
   </section>
 
