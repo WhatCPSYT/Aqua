@@ -107,8 +107,15 @@
       margin-left: var(--sidebar-w);
       flex: 1;
       padding: 60px 40px;
-      max-width: 900px;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .content-wrapper {
+      width: 100%;
+      max-width: 1000px;
     }
 
     .help-header {
@@ -160,9 +167,10 @@
 
     .popular-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
       margin-bottom: 60px;
+      width: 100%;
     }
 
     .popular-card {
@@ -200,7 +208,6 @@
       box-shadow: 0 12px 25px rgba(185, 233, 255, 0.4);
     }
 
-    /* Sekcje z artykułami pomocowymi */
     .article-section {
       background: white;
       border-radius: 30px;
@@ -209,6 +216,8 @@
       margin-bottom: 40px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.02);
       scroll-margin-top: 40px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .article-section h2 {
@@ -245,7 +254,7 @@
 
     @media (max-width: 768px) {
       body { flex-direction: column; }
-      .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid rgba(185, 233, 255, 0.5); }
+      .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid rgba(185, 233, 255, 0.5); padding: 20px; }
       .main-content { margin-left: 0; padding: 30px 20px; }
       .help-header h1 { font-size: 2.5em; }
     }
@@ -277,85 +286,87 @@
   </aside>
 
   <main class="main-content">
-    
-    <div class="help-header">
-      <h1>How can we help you?</h1>
-      <div class="search-wrapper">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" id="helpSearch" class="search-input" placeholder="Search for setup, commands, errors..." onkeyup="searchHelp()">
-      </div>
-    </div>
-
-    <div class="popular-grid">
-      <a href="#setup" class="popular-card">
-        <i class="fas fa-rocket"></i>
-        <span>Basic Setup</span>
-      </a>
-      <a href="#tickets" class="popular-card">
-        <i class="fas fa-ticket-alt"></i>
-        <span>Ticket Setup</span>
-      </a>
-      <a href="#music" class="popular-card">
-        <i class="fas fa-compact-disc"></i>
-        <span>Music Filters</span>
-      </a>
-      <a href="#verification" class="popular-card">
-        <i class="fas fa-user-check"></i>
-        <span>Verification Gate</span>
-      </a>
-    </div>
-
-    <div id="help-articles">
+    <div class="content-wrapper">
       
-      <section id="setup" class="article-section">
-        <h2><i class="fas fa-tools" style="color:#5dade2;"></i> Basic Setup Guide</h2>
-        <div class="guide-step">
-          <h3>1. Inviting the Bot</h3>
-          <p>Click the invite link on the main page. Ensure you grant the bot the recommended administrative permissions so all custom modules (like AutoMod and moderation actions) work without conflicts.</p>
+      <div class="help-header">
+        <h1>How can we help you?</h1>
+        <div class="search-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="helpSearch" class="search-input" placeholder="Search for setup, commands, errors..." onkeyup="searchHelp()">
         </div>
-        <div class="guide-step">
-          <h3>2. Checking Prefix / Slash Commands</h3>
-          <p>Aqua operates fully on Discord's modern Slash Command architecture. Simply type the following in any text channel to browse available menus:</p>
-          <br><span class="code-block">/help</span>
-        </div>
-      </section>
+      </div>
 
-      <section id="tickets" class="article-section">
-        <h2><i class="fas fa-ticket-alt" style="color:#5dade2;"></i> Ticket System Setup</h2>
-        <div class="guide-step">
-          <h3>Creating a Ticket Panel</h3>
-          <p>Aqua lets you create modern, interactive button panels for user inquiries. Run the ticket creation prompt inside your designated support channel:</p>
-          <br><span class="code-block">/ticket setup</span>
-        </div>
-        <div class="guide-step">
-          <h3>Transcripts & Logs</h3>
-          <p>Whenever a user or staff member closes a ticket using the interactive interface, Aqua automatically generates a secure chat log summary and forwards it straight to your DM.</p>
-        </div>
-      </section>
+      <div class="popular-grid">
+        <a href="#setup" class="popular-card">
+          <i class="fas fa-rocket"></i>
+          <span>Basic Setup</span>
+        </a>
+        <a href="#tickets" class="popular-card">
+          <i class="fas fa-ticket-alt"></i>
+          <span>Ticket Setup</span>
+        </a>
+        <a href="#music" class="popular-card">
+          <i class="fas fa-compact-disc"></i>
+          <span>Music Filters</span>
+        </a>
+        <a href="#verification" class="popular-card">
+          <i class="fas fa-user-check"></i>
+          <span>Verification Gate</span>
+        </a>
+      </div>
 
-      <section id="music" class="article-section">
-        <h2><i class="fas fa-music" style="color:#5dade2;"></i> Music Settings</h2>
-        <div class="guide-step">
-          <h3>How to stream Music</h3>
-          <p>Join any active voice channel in your community, jump into a text feed, and pull the bot using the standard song loader:</p>
-          <br><span class="code-block">/play [Song Name or Link]</span>
-        </div>
-        <div class="guide-step">
-          <h3>Unlocking Audio Filters</h3>
-          <p>Subscribers of <b>Aqua Plus</b> get instant access to premium distortion matrices. Tweak the audio quality on the fly with choices like:</p>
-          <br><span class="code-block">/filter bassboost</span> &nbsp; or &nbsp; <span class="code-block">/filter 8d</span>
-        </div>
-      </section>
+      <div id="help-articles">
+        
+        <section id="setup" class="article-section">
+          <h2><i class="fas fa-tools" style="color:#5dade2;"></i> Basic Setup Guide</h2>
+          <div class="guide-step">
+            <h3>1. Inviting the Bot</h3>
+            <p>Click the invite link on the main page. Ensure you grant the bot the recommended administrative permissions so all custom modules (like AutoMod and moderation actions) work without conflicts.</p>
+          </div>
+          <div class="guide-step">
+            <h3>2. Checking Prefix / Slash Commands</h3>
+            <p>Aqua operates fully on Discord's modern Slash Command architecture. Simply type the following in any text channel to browse available menus:</p>
+            <br><span class="code-block">/help</span>
+          </div>
+        </section>
 
-      <section id="verification" class="article-section">
-        <h2><i class="fas fa-shield-alt" style="color:#5dade2;"></i> Verification Gate</h2>
-        <div class="guide-step">
-          <h3>Securing your Server Against Raids</h3>
-          <p>Prevent rogue bot accounts and spam entries from overtaking your server. You can initialize a visual prompt system that gates entry until a button click is triggered:</p>
-          <br><span class="code-block">/verify setup</span>
-        </div>
-      </section>
+        <section id="tickets" class="article-section">
+          <h2><i class="fas fa-ticket-alt" style="color:#5dade2;"></i> Ticket System Setup</h2>
+          <div class="guide-step">
+            <h3>Creating a Ticket Panel</h3>
+            <p>Aqua lets you create modern, interactive button panels for user inquiries. Run the ticket creation prompt inside your designated support channel:</p>
+            <br><span class="code-block">/ticket setup</span>
+          </div>
+          <div class="guide-step">
+            <h3>Transcripts & Logs</h3>
+            <p>Whenever a user or staff member closes a ticket using the interactive interface, Aqua automatically generates a secure chat log summary and forwards it straight to your DM.</p>
+          </div>
+        </section>
 
+        <section id="music" class="article-section">
+          <h2><i class="fas fa-music" style="color:#5dade2;"></i> Music Settings</h2>
+          <div class="guide-step">
+            <h3>How to stream Music</h3>
+            <p>Join any active voice channel in your community, jump into a text feed, and pull the bot using the standard song loader:</p>
+            <br><span class="code-block">/play [Song Name or Link]</span>
+          </div>
+          <div class="guide-step">
+            <h3>Unlocking Audio Filters</h3>
+            <p>Subscribers of <b>Aqua Plus</b> get instant access to premium distortion matrices. Tweak the audio quality on the fly with choices like:</p>
+            <br><span class="code-block">/filter bassboost</span> &nbsp; or &nbsp; <span class="code-block">/filter 8d</span>
+          </div>
+        </section>
+
+        <section id="verification" class="article-section">
+          <h2><i class="fas fa-shield-alt" style="color:#5dade2;"></i> Verification Gate</h2>
+          <div class="guide-step">
+            <h3>Securing your Server Against Raids</h3>
+            <p>Prevent rogue bot accounts and spam entries from overtaking your server. You can initialize a visual prompt system that gates entry until a button click is triggered:</p>
+            <br><span class="code-block">/verify setup</span>
+          </div>
+        </section>
+
+      </div>
     </div>
   </main>
 
