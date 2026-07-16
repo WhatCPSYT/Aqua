@@ -19,6 +19,10 @@
       --text: #4a5568;
       --text-muted: #718096;
       --sidebar-w: 280px;
+      --warning: #feebc8;
+      --warning-text: #c05621;
+      --info: #ebf8ff;
+      --info-text: #2b6cb0;
     }
 
     html {
@@ -252,6 +256,33 @@
       margin: 5px 0;
     }
 
+    .alert-box {
+      padding: 15px 20px;
+      border-radius: 16px;
+      margin: 15px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.95em;
+    }
+
+    .alert-box.warning {
+      background-color: var(--warning);
+      color: var(--warning-text);
+      border-left: 5px solid #dd6b20;
+    }
+
+    .alert-box.info {
+      background-color: var(--info);
+      color: var(--info-text);
+      border-left: 5px solid #3182ce;
+    }
+
+    .alert-box i {
+      font-size: 1.2em;
+      margin-top: 3px;
+    }
+
     @media (max-width: 768px) {
       body { flex-direction: column; }
       .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid rgba(185, 233, 255, 0.5); padding: 20px; }
@@ -332,14 +363,36 @@
 
         <section id="tickets" class="article-section">
           <h2><i class="fas fa-ticket-alt" style="color:#5dade2;"></i> Ticket System Setup</h2>
-          <div class="guide-step">
-            <h3>Creating a Ticket Panel</h3>
-            <p>Aqua lets you create modern, interactive button panels for user inquiries. Run the ticket creation prompt inside your designated support channel:</p>
-            <br><span class="code-block">/ticket setup</span>
+          
+          <div class="alert-box warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+              <strong>Important: Bot Permissions & Role Hierarchy!</strong> <br>
+              1. Make sure Aqua has been granted both <code>Manage Roles</code> and <code>Manage Server</code> permissions in your server settings.<br>
+              2. <strong>Crucial Step:</strong> Go to Server Settings -> Roles, and drag the <strong>Aqua Bot role</strong> so that it is positioned <strong>HIGHER</strong> than your standard user roles (like Member, Verified) and the <code>@everyone</code> role. If the bot's role is too low, Discord will block it from adjusting channel overwrites for new tickets!
+            </div>
           </div>
+
           <div class="guide-step">
-            <h3>Transcripts & Logs</h3>
-            <p>Whenever a user or staff member closes a ticket using the interactive interface, Aqua automatically generates a secure chat log summary and forwards it straight to your DM.</p>
+            <h3>1. Setup Command</h3>
+            <p>To initialize the interactive panel for user support, run the initial ticket configuration command in the channel where you want the message to appear:</p>
+            <br><span class="code-block">/ticket-config</span>
+            <p style="margin-top: 10px; font-size: 0.9em; color: var(--text-muted);">Use this command to bind your support log channels, choose helper roles, and customize messages.</p>
+          </div>
+
+          <div class="guide-step">
+            <h3>2. Sending the Embed Panel</h3>
+            <p>Once your values are successfully saved inside Aqua's core system, push the user interface into your chat box by using:</p>
+            <br><span class="code-block">/ticket-setup</span>
+            <p style="margin-top: 10px; font-size: 0.9em; color: var(--text-muted);">This creates the modern message embed equipped with a customized button that members click to instantiate private channels.</p>
+          </div>
+
+          <div class="alert-box info">
+            <i class="fas fa-info-circle"></i>
+            <div>
+              <strong>Never delete ticket channels manually!</strong> <br>
+              Always close tickets exclusively by clicking the built-in <code>🔒 Close Ticket</code> or <code>📝 Close with Reason</code> interaction buttons inside the support channel. This gives Aqua the necessary time to safely compile the chat transcript database, push log summaries to administrators, and securely clean up active temporary channels.
+            </div>
           </div>
         </section>
 
@@ -359,6 +412,16 @@
 
         <section id="verification" class="article-section">
           <h2><i class="fas fa-shield-alt" style="color:#5dade2;"></i> Verification Gate</h2>
+
+          <div class="alert-box warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+              <strong>Important: Verification Requirements!</strong> <br>
+              1. The bot must have the <code>Manage Roles</code> permission enabled.<br>
+              2. <strong>Role Hierarchy Rule:</strong> In your Discord Server Settings, the <strong>Aqua</strong> integration role MUST be dragged and placed <strong>ABOVE the Member / Verified role</strong> that you want it to assign. Discord strictly restricts bots from giving out any roles that are higher than the bot's own highest role!
+            </div>
+          </div>
+
           <div class="guide-step">
             <h3>Securing your Server Against Raids</h3>
             <p>Prevent rogue bot accounts and spam entries from overtaking your server. You can initialize a visual prompt system that gates entry until a button click is triggered:</p>
