@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/WhatCPSYT/Aqua/main/logo2circle.png">
   
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     :root {
@@ -172,7 +172,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; transition: 0.3s; 
     }
     .feature-card:hover { border-color: var(--aqua-light); transform: translateY(-5px); }
-    .feature-card h3 { color: #5dade2; margin-top: 0; font-size: 1.5em; }
+    .feature-card h3 { color: #5dade2; margin-top: 0; font-size: 1.5em; display: flex; align-items: center; gap: 10px; }
     .feature-card p { color: var(--text-muted); }
 
     .premium-section {
@@ -192,7 +192,7 @@
       border: 1px solid rgba(255, 215, 0, 0.3);
       transition: 0.2s;
     }
-    .premium-box b { color: #b8860b; display: block; font-size: 1.1em; margin-bottom: 5px; }
+    .premium-box b { color: #b8860b; display: flex; align-items: center; gap: 8px; font-size: 1.1em; margin-bottom: 5px; }
     .premium-box span { font-size: 0.95em; color: var(--text-muted); }
 
     .faq-container {
@@ -228,7 +228,7 @@
     }
     .faq-item summary::after {
       content: '\f078';
-      font-family: 'Font Awesome 5 Free';
+      font-family: 'Font Awesome 6 Free';
       font-weight: 900;
       font-size: 0.9em;
       color: var(--text-muted);
@@ -294,27 +294,27 @@
     
     <div class="features-grid">
       <div class="feature-card" data-aos="fade-up">
-        <h3>🛡️ Moderation</h3>
+        <h3><i class="fas fa-shield-halved"></i> Moderation</h3>
         <p>Comprehensive tools including warn, mute, kick, ban and more. Secure your server using modern Discord timeout systems.</p>
       </div>
       <div class="feature-card" data-aos="fade-up">
-        <h3>🎵 High-End Music</h3>
+        <h3><i class="fas fa-music"></i> High-End Music</h3>
         <p>Listen to crystal-clear music. Includes filters (Bass Boost, 8D, and more) and advanced playback controls.</p>
       </div>
       <div class="feature-card" data-aos="fade-up">
-        <h3>🎫 Ticket System</h3>
+        <h3><i class="fas fa-ticket"></i> Ticket System</h3>
         <p>Professional support panels with custom descriptions, interactive buttons, and automated transcripts via DM.</p>
       </div>
       <div class="feature-card" data-aos="fade-up">
-        <h3>🤖 AutoMod</h3>
+        <h3><i class="fas fa-robot"></i> AutoMod</h3>
         <p>Protect your server 24/7. Automatic keyword blocking, anti-spam, mention limits, and link protection.</p>
       </div>
       <div class="feature-card" data-aos="fade-up">
-        <h3>✅ Verification</h3>
+        <h3><i class="fas fa-user-check"></i> Verification</h3>
         <p>Stop raids before they start with a secure, button-based verification gate for all new members.</p>
       </div>
       <div class="feature-card" data-aos="fade-up">
-        <h3>⚙️ Utility Tools</h3>
+        <h3><i class="fas fa-screwdriver-wrench"></i> Utility Tools</h3>
         <p>QR Code generation, instant translations, advanced calculator, and deep server statistics.</p>
       </div>
     </div>
@@ -330,7 +330,7 @@
           <span>Instantly clear a channel's message history by creating a fresh, clean copy with one click.</span>
         </div>
         <div class="premium-box">
-          <b><i class="fas fa-arrows-alt"></i> /massmove</b>
+          <b><i class="fas fa-arrows-turn-to-dots"></i> /massmove</b>
           <span>Efficiently move every user from one voice channel to another in a single second.</span>
         </div>
         <div class="premium-box">
@@ -338,11 +338,11 @@
           <span>Secure your community against raids by banning multiple malicious users at once via their IDs.</span>
         </div>
         <div class="premium-box">
-          <b><i class="fas fa-random"></i> /shuffle</b>
+          <b><i class="fas fa-shuffle"></i> /shuffle</b>
           <span>Keep your music queue fresh and unpredictable by randomizing the playback order.</span>
         </div>
         <div class="premium-box">
-          <b><i class="fas fa-magic"></i> Audio Filters</b>
+          <b><i class="fas fa-wand-magic-sparkles"></i> Audio Filters</b>
           <span>Enhance your listening experience with high-quality filters like Bass Boost, 8D, and Nightcore.</span>
         </div>
         <div class="premium-box">
@@ -394,11 +394,11 @@
       <h2>Trusted by Thousands</h2>
       <div class="stats-container">
         <div class="stat-item">
-          <span class="stat-number">88</span>
+          <span class="stat-number">91</span>
           <div style="font-weight: 700; color: #5dade2">Servers</div>
         </div>
         <div class="stat-item">
-          <span class="stat-number">4,666</span>
+          <span class="stat-number">4,855</span>
           <div style="font-weight: 700; color: #5dade2">Users</div>
         </div>
       </div>
