@@ -254,6 +254,7 @@
       color: #2d3748;
       display: inline-block;
       margin: 5px 0;
+      word-break: break-all;
     }
 
     .alert-box {
@@ -283,11 +284,27 @@
       margin-top: 3px;
     }
 
+    .markdown-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .markdown-item {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.9em;
+    }
+
     @media (max-width: 768px) {
       body { flex-direction: column; }
       .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid rgba(185, 233, 255, 0.5); padding: 20px; }
       .main-content { margin-left: 0; padding: 30px 20px; }
       .help-header h1 { font-size: 2.5em; }
+      .markdown-list { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -369,29 +386,61 @@
             <div>
               <strong>Important: Bot Permissions & Role Hierarchy!</strong> <br>
               1. Make sure Aqua has been granted both <code>Manage Roles</code> and <code>Manage Server</code> permissions in your server settings.<br>
-              2. <strong>Crucial Step:</strong> Go to Server Settings -> Roles, and drag the <strong>Aqua Bot role</strong> so that it is positioned <strong>HIGHER</strong> than your standard user roles (like Member, Verified) and the <code>@everyone</code> role. If the bot's role is too low, Discord will block it from adjusting channel overwrites for new tickets!
+              2. <strong>Crucial Step:</strong> Go to Server Settings -> Roles, and drag the <strong>Aqua Bot role</strong> so that it is positioned <strong>HIGHER</strong> than your standard user roles and Support roles.
             </div>
           </div>
 
           <div class="guide-step">
-            <h3>1. Setup Command</h3>
-            <p>To initialize the interactive panel for user support, run the initial ticket configuration command in the channel where you want the message to appear:</p>
+            <h3>1. Configure Ticket Options</h3>
+            <p>Run the configuration command to set up panel texts, log channels, voice channel creation, and support roles:</p>
             <br><span class="code-block">/ticket-config</span>
-            <p style="margin-top: 10px; font-size: 0.9em; color: var(--text-muted);">Use this command to bind your support log channels, choose helper roles, and customize messages.</p>
+            
+            <p style="margin-top: 15px;"><strong>Available parameters:</strong></p>
+            <ul style="margin-top: 5px;">
+              <li><code>title:</code> Embed title for the ticket panel.</li>
+              <li><code>description:</code> Embed description (supports Discord Markdown, quotes, headings, and <code>\n</code> for line breaks).</li>
+              <li><code>button:</code> Custom text displayed on the open ticket button.</li>
+              <li><code>logs:</code> Channel where ticket transcripts and close logs will be sent.</li>
+              <li><code>voice:</code> Set to <code>true</code> or <code>false</code> (automatically creates a dedicated Voice Channel for each opened ticket).</li>
+              <li><code>role:</code> Select the Ticket Support Role (members with this role get access to newly opened tickets).</li>
+            </ul>
+          </div>
+
+          <div class="alert-box info">
+            <i class="fas fa-magic"></i>
+            <div style="width: 100%;">
+              <strong>Discord Text Formatting Reference:</strong><br>
+              You can style your <code>description</code> text with full Discord formatting syntax:
+              
+              <div class="markdown-list">
+                <div class="markdown-item"><code>\n</code> — New line / Line break</div>
+                <div class="markdown-item"><code>**text**</code> — <strong>Bold text</strong></div>
+                <div class="markdown-item"><code>*text*</code> — <em>Italic text</em></div>
+                <div class="markdown-item"><code># Title</code> — Header 1 (Big Text)</div>
+                <div class="markdown-item"><code>## Title</code> — Header 2 (Medium Text)</div>
+                <div class="markdown-item"><code>### Title</code> — Header 3 (Small Header)</div>
+                <div class="markdown-item"><code>> text</code> — Quote Block</div>
+                <div class="markdown-item"><code>>>> text</code> — Multi-line Quote Block</div>
+                <div class="markdown-item"><code>`text`</code> — Inline Code</div>
+                <div class="markdown-item"><code>~~text~~</code> — <del>Strikethrough</del></div>
+              </div>
+
+              <br><strong>Full Command Example:</strong><br>
+              <span class="code-block">/ticket-config title: 🎫 Support Hub description: # Need Assistance?\n> Click below to open a private ticket.\n\n### Rules:\n* Be polite\n* Describe your issue button: Create Ticket logs: #ticket-logs voice: true role: @Support Team</span>
+            </div>
           </div>
 
           <div class="guide-step">
-            <h3>2. Sending the Embed Panel</h3>
-            <p>Once your values are successfully saved inside Aqua's core system, push the user interface into your chat box by using:</p>
+            <h3>2. Send the Ticket Panel</h3>
+            <p>Once configuration is saved, publish the panel to your support channel:</p>
             <br><span class="code-block">/ticket-setup</span>
-            <p style="margin-top: 10px; font-size: 0.9em; color: var(--text-muted);">This creates the modern message embed equipped with a customized button that members click to instantiate private channels.</p>
           </div>
 
           <div class="alert-box info">
             <i class="fas fa-info-circle"></i>
             <div>
               <strong>Never delete ticket channels manually!</strong> <br>
-              Always close tickets exclusively by clicking the built-in <code>🔒 Close Ticket</code> or <code>📝 Close with Reason</code> interaction buttons inside the support channel. This gives Aqua the necessary time to safely compile the chat transcript database, push log summaries to administrators, and securely clean up active temporary channels.
+              Always close tickets exclusively by clicking the built-in <code>🔒 Close Ticket</code> or <code>📝 Close with Reason</code> buttons inside the support channel. This allows Aqua to compile chat transcripts and log them properly.
             </div>
           </div>
         </section>
@@ -406,7 +455,7 @@
           <div class="guide-step">
             <h3>Unlocking Audio Filters</h3>
             <p>Subscribers of <b>Aqua Plus</b> get instant access to premium distortion matrices. Tweak the audio quality on the fly with choices like:</p>
-            <br><span class="code-block">/filter bassboost</span> &nbsp; or &nbsp; <span class="code-block">/filter 8d</span>
+            <br><span class="code-block">/filter bassboost</span> &nbsp; or &nbsp; <span class="code-block">/filter 8d</span> &nbsp; or &nbsp; <span class="code-block">/filter nightcore</span> &nbsp; or &nbsp; <span class="code-block">/filter vaporwave</span> &nbsp; <strong>and more!</strong>
           </div>
         </section>
 
@@ -418,14 +467,52 @@
             <div>
               <strong>Important: Verification Requirements!</strong> <br>
               1. The bot must have the <code>Manage Roles</code> permission enabled.<br>
-              2. <strong>Role Hierarchy Rule:</strong> In your Discord Server Settings, the <strong>Aqua</strong> integration role MUST be dragged and placed <strong>ABOVE the Member / Verified role</strong> that you want it to assign. Discord strictly restricts bots from giving out any roles that are higher than the bot's own highest role!
+              2. <strong>Role Hierarchy Rule:</strong> In your Discord Server Settings, the <strong>Aqua</strong> integration role MUST be dragged and placed <strong>ABOVE the Member / Verified role</strong> that you want it to assign.
             </div>
           </div>
 
           <div class="guide-step">
-            <h3>Securing your Server Against Raids</h3>
-            <p>Prevent rogue bot accounts and spam entries from overtaking your server. You can initialize a visual prompt system that gates entry until a button click is triggered:</p>
-            <br><span class="code-block">/verify setup</span>
+            <h3>1. Configure Verification System</h3>
+            <p>Set up your custom welcome message, title, button text, and verified role before generating the panel:</p>
+            <br><span class="code-block">/verification-config</span>
+
+            <p style="margin-top: 15px;"><strong>Available parameters:</strong></p>
+            <ul style="margin-top: 5px;">
+              <li><code>title:</code> Embed title for the verification panel.</li>
+              <li><code>description:</code> Main panel description (supports Discord Markdown, quotes, headings, and <code>\n</code> for line breaks).</li>
+              <li><code>button:</code> Text shown on the verification trigger button.</li>
+              <li><code>role:</code> Role assigned automatically to users after solving the verification captcha.</li>
+            </ul>
+          </div>
+
+          <div class="alert-box info">
+            <i class="fas fa-magic"></i>
+            <div style="width: 100%;">
+              <strong>Discord Text Formatting Reference:</strong><br>
+              You can style your <code>description</code> text with full Discord formatting syntax:
+              
+              <div class="markdown-list">
+                <div class="markdown-item"><code>\n</code> — New line / Line break</div>
+                <div class="markdown-item"><code>**text**</code> — <strong>Bold text</strong></div>
+                <div class="markdown-item"><code>*text*</code> — <em>Italic text</em></div>
+                <div class="markdown-item"><code># Title</code> — Header 1 (Big Text)</div>
+                <div class="markdown-item"><code>## Title</code> — Header 2 (Medium Text)</div>
+                <div class="markdown-item"><code>### Title</code> — Header 3 (Small Header)</div>
+                <div class="markdown-item"><code>> text</code> — Quote Block</div>
+                <div class="markdown-item"><code>>>> text</code> — Multi-line Quote Block</div>
+                <div class="markdown-item"><code>`text`</code> — Inline Code</div>
+                <div class="markdown-item"><code>~~text~~</code> — <del>Strikethrough</del></div>
+              </div>
+
+              <br><strong>Full Command Example:</strong><br>
+              <span class="code-block">/verification-config title: 🌸 Aqua Verification description: # Welcome to **Aqua Community**! 🌊\n\n> To gain full access to all channels, please verify yourself.\n\n### Instructions:\nClick the button below and solve a quick math problem. button: Start Verification role: @Member</span>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <h3>2. Send Verification Panel</h3>
+            <p>Once configuration is saved, send the interactive verification embed into your current channel:</p>
+            <br><span class="code-block">/verification-setup</span>
           </div>
         </section>
 
