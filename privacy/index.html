@@ -9,26 +9,170 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    :root { --primary: #85d7ff; --aqua-light: #B9E9FF; --bg: #f0faff; --card-bg: #ffffff; --text: #4a5568; --text-muted: #718096; }
-    body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-    .glow-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 90% 80%, var(--aqua-light) 0%, transparent 25%); z-index: -1; }
-    .container { max-width: 800px; margin: 80px auto; padding: 40px; background: white; border-radius: 40px; border: 2px solid var(--aqua-light); box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
-    h1 { font-size: 3em; font-weight: 800; color: var(--text); margin-bottom: 10px; }
-    h2 { color: #5dade2; margin-top: 30px; }
-    .back-btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; transition: 0.3s; }
-    .back-btn:hover { color: var(--primary); }
-    footer { text-align: center; padding: 40px; color: var(--text-muted); }
+    :root { 
+      --primary: #85d7ff; 
+      --aqua-light: #B9E9FF; 
+      --bg: #f0faff; 
+      --card-bg: #ffffff; 
+      --text: #4a5568; 
+      --heading-color: #2d3748;
+      --text-muted: #718096; 
+      --border-color: #B9E9FF;
+      --shadow-color: rgba(0,0,0,0.03);
+      --section-heading: #5dade2;
+    }
+
+    [data-theme="dark"] {
+      --primary: #3182ce;
+      --aqua-light: rgba(49, 130, 206, 0.25);
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #cbd5e1;
+      --heading-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --shadow-color: rgba(0, 0, 0, 0.4);
+      --section-heading: #38bdf8;
+    }
+
+    body { 
+      margin: 0; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .glow-bg { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: radial-gradient(circle at 90% 80%, var(--aqua-light) 0%, transparent 25%); 
+      z-index: -1; 
+      transition: background 0.3s ease;
+    }
+
+    .container { 
+      max-width: 800px; 
+      margin: 80px auto; 
+      padding: 40px; 
+      background: var(--card-bg); 
+      border-radius: 40px; 
+      border: 2px solid var(--border-color); 
+      box-shadow: 0 10px 25px var(--shadow-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    h1 { 
+      font-size: 3em; 
+      font-weight: 800; 
+      color: var(--heading-color); 
+      margin-bottom: 10px; 
+    }
+
+    h2 { 
+      color: var(--section-heading); 
+      margin-top: 30px; 
+    }
+
+    .back-btn { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+      text-decoration: none; 
+      color: var(--text-muted); 
+      font-weight: 600; 
+      transition: 0.3s; 
+    }
+
+    .back-btn:hover { 
+      color: var(--section-heading); 
+    }
+
+    .theme-switcher-container {
+      background: var(--bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .theme-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85em;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn:hover {
+      color: var(--heading-color);
+    }
+
+    .theme-btn.active {
+      background: var(--card-bg);
+      color: var(--heading-color);
+      box-shadow: 0 2px 8px var(--shadow-color);
+      font-weight: 700;
+    }
+
+    footer { 
+      text-align: center; 
+      padding: 40px; 
+      color: var(--text-muted); 
+    }
+
     ul { padding-left: 20px; }
     li { margin-bottom: 8px; }
+
+    @media (max-width: 768px) {
+      .container { margin: 20px; padding: 25px; border-radius: 24px; }
+      .header-top { flex-direction: column; align-items: flex-start; gap: 15px; }
+      h1 { font-size: 2.2em; }
+    }
   </style>
 </head>
 <body>
   <div class="glow-bg"></div>
   <div class="container">
-    <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    
+    <div class="header-top">
+      <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      
+      <div class="theme-switcher-container">
+        <button class="theme-btn" id="btn-light" onclick="setTheme('light')">
+          <i class="fas fa-sun"></i> Light
+        </button>
+        <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')">
+          <i class="fas fa-moon"></i> Dark
+        </button>
+        <button class="theme-btn" id="btn-system" onclick="setTheme('system')">
+          <i class="fas fa-desktop"></i> System
+        </button>
+      </div>
+    </div>
+
     <h1>Privacy Policy</h1>
     <p>Your privacy is important to us. Last updated: July 2026</p>
-    <hr style="border: 0; height: 1px; background: var(--aqua-light); margin: 30px 0;">
+    <hr style="border: 0; height: 1px; background: var(--border-color); margin: 30px 0;">
     
     <h2>Data Collection</h2>
     <p>Aqua Bot collects minimal data necessary to function and store your server configurations. This includes:</p>
@@ -49,5 +193,36 @@
     <p>Configurations are stored safely as long as the bot remains on your server. Server administrators have the ability to completely delete all custom server data (including Ticket setups, Mod Logs, and Verification histories) at any time. <strong>This action is permanent and completely irreversible</strong>; wiped data cannot be recovered or restored afterward.</p>
   </div>
   <footer>&copy; 2026 Aqua | All rights reserved</footer>
+
+  <script>
+    const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function applyTheme(theme) {
+      if (theme === 'system') {
+        const isSystemDark = systemThemeMedia.matches;
+        document.documentElement.setAttribute('data-theme', isSystemDark ? 'dark' : 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+
+      document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-${theme}`);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem('theme', theme);
+      applyTheme(theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    applyTheme(savedTheme);
+
+    systemThemeMedia.addEventListener('change', () => {
+      if ((localStorage.getItem('theme') || 'system') === 'system') {
+        applyTheme('system');
+      }
+    });
+  </script>
 </body>
 </html>
